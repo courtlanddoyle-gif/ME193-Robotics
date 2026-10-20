@@ -4,6 +4,8 @@ import concurrent.futures
 import legoeducation as le
 import legoeducation.background_worker as bw
 import legoeducation.basic_device as bd
+import lego_compat
+lego_compat.apply()   # read Color Sensors on the updated firmware
 from pyscript import document, window
 from pyscript.js_modules import ble
 from pyscript.ffi import create_proxy

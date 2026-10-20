@@ -83,6 +83,12 @@ Notes:
   (`JS/ble.js` and `trainer/JS/ble.js` likewise).
 - **`legoeducation` is pinned to 1.0.6** in both `.toml` files. Version 1.1.1
   replaced the worker the page patches for the browser, and breaks it.
+- **Color Sensor firmware update.** Updated Color Sensors (RPC 2.3, the
+  firmware that matches `legoeducation` 1.2.0) add a sensor-mode byte to each
+  reading, which 1.0.6 can't parse. `lego_compat.py` (one copy per page)
+  replaces the library's notification parser with one that reads both the
+  new and the old layout; `Device.py` applies it at import. Readings from
+  updated sensors also carry `colorSensorMode` (0 off, 1 color, 2 ambient).
 - The builder page still includes the original PyScript analytics snippet;
   the trainer page does not.
 

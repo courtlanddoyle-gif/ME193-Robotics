@@ -10,6 +10,7 @@ packages = [ "legoeducation==1.0.6","numpy"]
 "./network/network_actions.py" = "./network_actions.py"
 "./network/network_model.py" = "./network_model.py"
 "./Device.py" = "./Device.py"
+"./lego_compat.py" = "./lego_compat.py"
 "./plot.py" = "./plot.py"
 "./main.py" = "./main.py"
 "./misc_ui/arrows.py" = "./arrows.py"

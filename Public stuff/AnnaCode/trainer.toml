@@ -3,6 +3,7 @@ packages = [ "legoeducation==1.0.6","numpy"]
 
 [files]
 "./trainer/Device.py" = "./Device.py"
+"./trainer/lego_compat.py" = "./lego_compat.py"
 "./trainer/main.py" = "./main.py"
 "./trainer/plots/fit_plot.py" = "./fit_plot.py"
 "./trainer/plots/live_plot.py" = "./live_plot.py"
