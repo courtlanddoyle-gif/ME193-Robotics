@@ -1,6 +1,6 @@
 # 🚶 Gait ID
 
-An ankle-worn wearable that tells whether you're **standing, walking, running, or biking**, using an Arduino UNO Q and an MPU6050 IMU. It runs two non-neural-net models side by side, and a live web page on your phone shows both calls.
+**Goal:** build a wearable that tells, live, whether the person wearing it is **standing, walking, running, or biking**, and compare two ways of deciding. An Arduino UNO Q and an MPU6050 IMU are strapped to the ankle. Model 1 only gets the peak acceleration along one axis. Model 2 gets all six IMU channels: impact, which way the shin points (gravity), and how it rotates (gyro). Neither model uses a neural net. The board hosts its own WiFi and a phone page that shows both models' calls in real time.
 
 ME-193, Tufts, Fall 2026 — Courtland Doyle
 
@@ -75,9 +75,7 @@ Model 2 also knows **which way your shin points** and **how it rotates**:
 - **Jogging** leans the shin forward, so gravity shifts onto the y axis (`ay_mean` ≈ 3.2 vs. 0.6 walking, no overlap).
 - **Biking** tilts the shin back, whether you're sitting (`ay_mean` ≈ -3.9) or on your back (≈ -9.5). It also rotates in a smooth circle, so the gyro peak stays low (< 3.8 vs. > 5 when walking).
 
-### What didn't work
-
-The first Model 2 used a "quiet gyro" feature: the fraction of time the foot is nearly still, on the theory that walking has a planted-foot phase and pedaling doesn't. Real data proved it wrong. On an ankle mount, the **shin** keeps rotating over the planted foot, so the feature read ≈ 0 for walking, jogging, *and* biking. It was replaced with the tilt and gyro-peak features above.
+Note: Model 2 doesn't use a "fraction of time the gyro is still" feature. On an ankle mount the shin never stops rotating, so that feature reads ≈ 0 for every moving activity.
 
 ## Running it
 
