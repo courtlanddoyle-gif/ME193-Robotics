@@ -1,0 +1,17 @@
+{
+  "name": "20261103-012241_walk-normal",
+  "activity": "walk-normal",
+  "distance_m": 0.0,
+  "note": "",
+  "start_time": 1793668961.1953433,
+  "sample_rate_hz": 50,
+  "gyro_bias": {
+    "gx": 0.3206795999407768,
+    "gy": 0.19625760987401009,
+    "gz": -0.011671056505292654
+  },
+  "mount": "IMU inside right ankle; HC-SR04 inside right calf, upside down, aimed at left leg",
+  "steps_counted": 15,
+  "samples": 496,
+  "duration_s": 10.0
+}

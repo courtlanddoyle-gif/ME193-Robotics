@@ -1,0 +1,11 @@
+{
+ "name": "20261103-011601_turns",
+ "activity": "turns",
+ "steps_counted": 40,
+ "samples": 1403,
+ "right_detected": "19",
+ "right": [],
+ "left": [],
+ "status": "mismatch: 19 full + 0 shallow right swings can't make 40 steps",
+ "steps": []
+}

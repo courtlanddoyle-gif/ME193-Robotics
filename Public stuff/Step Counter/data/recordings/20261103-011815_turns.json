@@ -1,0 +1,18 @@
+{
+  "name": "20261103-011815_turns",
+  "activity": "turns",
+  "distance_m": 0.0,
+  "note": "relabeled: meant to be straight, had turns",
+  "start_time": 1793668695.4704843,
+  "sample_rate_hz": 50,
+  "gyro_bias": {
+    "gx": 0.3206795999407768,
+    "gy": 0.19625760987401009,
+    "gz": -0.011671056505292654
+  },
+  "mount": "IMU inside right ankle; HC-SR04 inside right calf, upside down, aimed at left leg",
+  "steps_counted": 50,
+  "samples": 1419,
+  "duration_s": 28.62,
+  "activity_original": "walk-fast"
+}

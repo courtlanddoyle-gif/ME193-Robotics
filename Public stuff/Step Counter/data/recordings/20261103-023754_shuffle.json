@@ -1,0 +1,20 @@
+{
+  "name": "20261103-023754_shuffle",
+  "activity": "shuffle",
+  "distance_m": 0.0,
+  "note": "relabeled: picked stand by mistake, was shuffling",
+  "start_time": 1793673474.119846,
+  "sample_rate_hz": 50,
+  "gyro_bias": {
+    "gx": 0.32142303049564364,
+    "gy": 0.1971022953093052,
+    "gz": -0.01478866764344275
+  },
+  "mount": "IMU inside right ankle; HC-SR04 inside right calf, upside down, aimed at left leg",
+  "steps_counted": 0,
+  "samples": 1633,
+  "echo_frac": 0.82,
+  "alive_frac": 1.0,
+  "duration_s": 32.96,
+  "activity_original": "stand"
+}

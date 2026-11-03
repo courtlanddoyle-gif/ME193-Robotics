@@ -1,0 +1,19 @@
+{
+  "name": "20261103-141051_jog",
+  "activity": "jog",
+  "distance_m": 14.33,
+  "note": "",
+  "start_time": 1793715051.9173977,
+  "sample_rate_hz": 50,
+  "gyro_bias": {
+    "gx": 0.3233308991789818,
+    "gy": 0.19746201872825622,
+    "gz": -0.012521071834489703
+  },
+  "mount": "IMU inside right ankle; HC-SR04 inside right calf, upside down, aimed at left leg",
+  "steps_counted": 15,
+  "samples": 376,
+  "echo_frac": 0.947,
+  "alive_frac": 1.0,
+  "duration_s": 7.59
+}

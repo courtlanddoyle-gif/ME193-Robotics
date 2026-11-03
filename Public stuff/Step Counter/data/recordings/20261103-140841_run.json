@@ -1,0 +1,19 @@
+{
+  "name": "20261103-140841_run",
+  "activity": "run",
+  "distance_m": 14.33,
+  "note": "",
+  "start_time": 1793714921.0561943,
+  "sample_rate_hz": 50,
+  "gyro_bias": {
+    "gx": 0.3233308991789818,
+    "gy": 0.19746201872825622,
+    "gz": -0.012521071834489703
+  },
+  "mount": "IMU inside right ankle; HC-SR04 inside right calf, upside down, aimed at left leg",
+  "steps_counted": 13,
+  "samples": 369,
+  "echo_frac": 0.886,
+  "alive_frac": 1.0,
+  "duration_s": 7.46
+}

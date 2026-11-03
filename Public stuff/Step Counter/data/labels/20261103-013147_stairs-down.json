@@ -1,0 +1,32 @@
+{
+ "name": "20261103-013147_stairs-down",
+ "activity": "stairs-down",
+ "steps_counted": 9,
+ "samples": 311,
+ "right_detected": "5",
+ "right": [
+  86,
+  137,
+  187,
+  237,
+  295
+ ],
+ "left": [
+  111,
+  162,
+  212,
+  266
+ ],
+ "status": "ok",
+ "steps": [
+  86,
+  111,
+  137,
+  162,
+  187,
+  212,
+  237,
+  266,
+  295
+ ]
+}

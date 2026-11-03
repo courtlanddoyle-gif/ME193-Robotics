@@ -1,0 +1,19 @@
+{
+  "name": "20261103-024345_walk-fast",
+  "activity": "walk-fast",
+  "distance_m": 14.3256,
+  "note": "",
+  "start_time": 1793673825.6565535,
+  "sample_rate_hz": 50,
+  "gyro_bias": {
+    "gx": 0.32142303049564364,
+    "gy": 0.1971022953093052,
+    "gz": -0.01478866764344275
+  },
+  "mount": "IMU inside right ankle; HC-SR04 inside right calf, upside down, aimed at left leg",
+  "steps_counted": 19,
+  "samples": 564,
+  "echo_frac": 0.874,
+  "alive_frac": 1.0,
+  "duration_s": 11.38
+}

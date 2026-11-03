@@ -1,0 +1,32 @@
+{
+ "name": "20261103-013134_stairs-up",
+ "activity": "stairs-up",
+ "steps_counted": 9,
+ "samples": 300,
+ "right_detected": "5",
+ "right": [
+  41,
+  105,
+  158,
+  214,
+  272
+ ],
+ "left": [
+  73,
+  131,
+  186,
+  243
+ ],
+ "status": "ok",
+ "steps": [
+  41,
+  73,
+  105,
+  131,
+  158,
+  186,
+  214,
+  243,
+  272
+ ]
+}

@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Step Counter</title>
+    <style>
+      :root {
+        --bg: #101214;
+        --card: #1b1e22;
+        --text: #f2f2f2;
+        --muted: #9aa0a6;
+        --standing: #8ab4f8;
+        --walking: #81c995;
+        --running: #f28b82;
+        --biking: #fdd663;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 16px;
+        gap: 16px;
+      }
+      header {
+        width: 100%;
+        max-width: 520px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+      #conn::before {
+        content: "";
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 6px;
+        background: #f28b82;
+      }
+      #conn.live::before { background: #81c995; }
+      #main {
+        width: 100%;
+        max-width: 520px;
+        background: var(--card);
+        border-radius: 24px;
+        border: 4px solid var(--muted);
+        padding: 32px 16px;
+        text-align: center;
+        transition: border-color 0.2s;
+      }
+      #stepcount {
+        font-size: clamp(5rem, 32vw, 10rem);
+        font-weight: 800;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+      }
+      #label {
+        font-size: clamp(1.5rem, 8vw, 2.5rem);
+        font-weight: 800;
+        margin-top: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+      #sub { color: var(--muted); margin-top: 12px; font-size: 1rem; }
+      #walked { margin-top: 14px; font-size: 1.3rem; color: var(--muted); }
+      #walked b { font-size: 2.2rem; color: var(--text); font-variant-numeric: tabular-nums; }
+      .pm { font-size: 1rem; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); }
+      #accuracy { line-height: 1.5; }
+      #accuracy h3 { color: var(--text); font-size: 1rem; margin: 14px 0 4px; }
+      #accuracy p, #accuracy ul { margin: 4px 0; }
+      #accuracy td:first-child { color: var(--muted); padding-right: 12px; }
+      #resetbtn {
+        margin-top: 16px;
+        font: inherit;
+        font-size: 1.05rem;
+        font-weight: 700;
+        padding: 10px 28px;
+        border: 0;
+        border-radius: 12px;
+        background: #3a3f45;
+        color: var(--text);
+      }
+      #m1, #dist {
+        width: 100%;
+        max-width: 520px;
+        background: var(--card);
+        border-radius: 16px;
+        padding: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.15rem;
+      }
+      #m1 b, #dist b { font-size: 1.4rem; }
+      #m1 .gait { display: flex; flex-direction: column; gap: 2px; }
+      #m1 .gait.m1 { text-align: right; align-items: flex-end; }
+      #m1 #emoji { font-size: 2rem; line-height: 1; }
+      #m1 b { font-size: 1.5rem; text-transform: capitalize; }
+      #m1 .gait.m1 b { font-size: 1.1rem; }
+      #m1 small { color: var(--muted); font-size: 0.85rem; }
+      #distmin { font-size: 0.95rem; color: var(--muted); }
+      #agree { font-size: 0.95rem; color: var(--muted); }
+      details {
+        width: 100%;
+        max-width: 520px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+      td { padding: 4px 0; font-variant-numeric: tabular-nums; }
+      td:last-child { text-align: right; color: var(--text); }
+      .stale #main { opacity: 0.45; }
+      #rec {
+        width: 100%;
+        max-width: 520px;
+        background: var(--card);
+        border-radius: 16px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      #rec h2 { margin: 0; font-size: 1.2rem; }
+      #rec label { display: flex; flex-direction: column; gap: 4px; color: var(--muted); font-size: 0.9rem; }
+      #rec select, #rec input {
+        font: inherit;
+        font-size: 1.1rem;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #3a3f45;
+        background: #101214;
+        color: var(--text);
+      }
+      #rec button {
+        font: inherit;
+        font-size: 1.2rem;
+        font-weight: 700;
+        padding: 14px;
+        border: 0;
+        border-radius: 12px;
+        background: #81c995;
+        color: #101214;
+      }
+      #rec button.stop { background: #f28b82; }
+      #rec button.plain { background: #3a3f45; color: var(--text); }
+      #rec .row { display: flex; gap: 8px; }
+      #rec .row > * { flex: 1; }
+      #recstatus { color: var(--muted); font-variant-numeric: tabular-nums; }
+      #recstatus.on { color: #f28b82; font-weight: 700; }
+      #reclist { margin: 0; padding-left: 18px; color: var(--muted); font-size: 0.9rem; }
+      [hidden] { display: none !important; }
+      #sensorwarn {
+        width: 100%;
+        max-width: 520px;
+        background: #b3261e;
+        color: #ffffff;
+        border-radius: 16px;
+        padding: 14px 16px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        line-height: 1.35;
+      }
+      #sensorwarn small { display: block; font-weight: 400; font-size: 0.95rem; margin-top: 4px; }
+      #recwarn { color: #f28b82; font-weight: 700; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <span>Step Counter</span>
+      <span id="conn">Connecting&hellip;</span>
+    </header>
+
+    <section id="sensorwarn" hidden>
+      &#9888; Distance sensor not responding
+      <small>It hasn't answered a ping in the last 2 s (not just "nothing in range"). Check the HC-SR04 wires and the resistors before recording.</small>
+    </section>
+
+    <section id="main">
+      <div id="stepcount">&ndash;</div>
+      <div id="label">steps <span class="pm" id="steppm"></span></div>
+      <div id="walked"><b id="distwalked">&ndash;</b> walked <span class="pm" id="distpm"></span></div>
+      <div id="sub"><span id="cadence">&ndash;</span> &middot; <span id="netname">neural net</span></div>
+      <button id="resetbtn">Reset</button>
+    </section>
+
+    <section id="m1">
+      <span class="gait"><span id="emoji"></span> <b id="gaitlabel">&ndash;</b>
+        <small>Gait ID, Model 2 (all IMU)</small></span>
+      <span class="gait m1"><b id="m1label">&ndash;</b>
+        <small>Model 1 (one axis) &middot; <span id="agree"></span></small></span>
+    </section>
+
+    <section id="dist">
+      <span>Distance sensor: <b id="distnow">&ndash;</b></span>
+      <span id="distmin"></span>
+    </section>
+
+    <details id="accuracy">
+      <summary>How accurate is this? (uncertainty analysis)</summary>
+
+      <p>The &plusmn; next to each number is a 90% range: in testing, 9 out of 10
+      walks were off by less than that. Every test walk was judged by a model that
+      had never seen it.</p>
+
+      <h3>Step count (neural net)</h3>
+      <table>
+        <tr><td>Tested on</td><td>61 walking recordings, 1,099 counted steps (5-fold cross-validation &times; 3 training runs)</td></tr>
+        <tr><td>Typical error</td><td>4.4% per recording (about 0.65 steps)</td></tr>
+        <tr><td>90% range</td><td>&plusmn;11% per recording</td></tr>
+        <tr><td>All steps combined</td><td>within 0.5% (errors mostly cancel)</td></tr>
+        <tr><td>Hardest</td><td>running (+6 to 8%), stairs up (&minus;4%)</td></tr>
+        <tr><td>Not walking</td><td>~0.8 false steps per 30 s of standing / shuffling / biking</td></tr>
+        <tr><td>Sensors</td><td>IMU + ultrasonic and IMU-only tie (4.4% vs 4.4%); the ultrasonic is a backup view of each stride</td></tr>
+      </table>
+
+      <h3>Distance</h3>
+      <table>
+        <tr><td>How</td><td>steps &times; step length; step length = 0.23 m + 0.25 m &times; leg swing speed &minus; 0.002 m &times; cadence</td></tr>
+        <tr><td>Tested on</td><td>25 walks over a measured 9.5 m or 14.3 m, each predicted by a fit that left it out</td></tr>
+        <tr><td>Typical error</td><td>5.5%</td></tr>
+        <tr><td>90% range</td><td>&plusmn;11%; worst 26% (a slow, cramped walk at home)</td></tr>
+        <tr><td>Live check</td><td>two runs on the 14.33 m stretch both read 13.8 m (&minus;3.7%)</td></tr>
+      </table>
+
+      <h3>Limitations</h3>
+      <ul>
+        <li>The &plusmn;11% comes from short walks (10&ndash;75 steps); most error is at the start and stop, so long walks are usually closer.</li>
+        <li>Calibrated to one person. Someone else's legs and gait would need new recordings.</li>
+        <li>The IMU must be strapped on the inside of the right ankle the same way every time.</li>
+        <li>Distance has no GPS or map: errors add up and never get corrected. Not tested on stairs or hills.</li>
+        <li>After you stop, the count keeps catching up for about 2 s (each step is counted over a 2 s window).</li>
+        <li>Power up with the sensor still: the gyro calibrates in the first 2 s.</li>
+      </ul>
+    </details>
+
+    <section id="rec">
+      <h2>Record training data</h2>
+
+      <div id="recsetup">
+        <label>Activity
+          <select id="activity">
+            <option value="walk-normal">Walk, normal pace</option>
+            <option value="walk-slow">Walk, slow</option>
+            <option value="walk-fast">Walk, fast</option>
+            <option value="jog">Jog</option>
+            <option value="run">Run</option>
+            <option value="stairs-up">Stairs up</option>
+            <option value="stairs-down">Stairs down</option>
+            <option value="turns">Walk with turns</option>
+            <option value="distance-walk">Measured-distance walk</option>
+            <option value="stand">Stand (0 steps)</option>
+            <option value="shuffle">Shuffle / fidget</option>
+            <option value="bike">Bike (0 steps)</option>
+          </select>
+        </label>
+        <label>Note (optional)
+          <input id="note" type="text" placeholder="e.g. hallway, sneakers" />
+        </label>
+      </div>
+      <button id="startbtn">Start recording</button>
+
+      <div id="recstop" hidden>
+        <p id="recwarn" hidden></p>
+        <div class="row">
+          <label>Steps you counted
+            <input id="steps" type="number" inputmode="numeric" min="0" placeholder="both feet" />
+          </label>
+          <label>Distance (m)
+            <input id="distance" type="number" inputmode="decimal" min="0" step="0.1" placeholder="if measured" />
+          </label>
+        </div>
+        <div class="row" style="margin-top: 8px">
+          <button id="savebtn">Save</button>
+          <button id="discardbtn" class="plain">Discard</button>
+        </div>
+      </div>
+      <button id="stopbtn" class="stop" hidden>Stop</button>
+
+      <div id="recstatus">Not recording</div>
+      <ol id="reclist"></ol>
+    </section>
+
+    <details>
+      <summary>Live feature values</summary>
+      <table id="features"></table>
+    </details>
+
+    <script src="app.js"></script>
+  </body>
+</html>
