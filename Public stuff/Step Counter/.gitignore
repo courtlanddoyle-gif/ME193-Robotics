@@ -1,2 +1,4 @@
 # ignore app cache folder
 .cache/
+# preview frames from docs/make_animation.py --preview
+docs/preview/
