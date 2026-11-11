@@ -1,0 +1,6 @@
+name: Finger Lock
+description: "Show a 3-number code with your fingers under the webcam; a CNN counts them and the latch opens for the right code"
+icon: 🔐
+ports: []
+bricks:
+- arduino:web_ui: {}

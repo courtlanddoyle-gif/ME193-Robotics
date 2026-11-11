@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finger Lock</title>
+<style>
+:root{--bg:#141414;--card:#1f1f1f;--ink:#f0efec;--muted:#9a998f;--green:#3cc47c;--yellow:#f5b400;--red:#e5484d;--blue:#3987e5}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:520px;margin:0 auto;padding:16px}
+h1{font-size:20px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+#conn{font-size:12px;color:var(--muted);margin-left:auto;font-weight:400}
+.card{background:var(--card);border-radius:14px;padding:14px;margin-bottom:12px}
+#state{font-size:34px;font-weight:800;letter-spacing:1px}
+#msg{color:var(--muted);margin-top:4px}
+.slots{display:flex;gap:10px;margin-top:12px}
+.slot{width:64px;height:76px;border:2px solid #444;border-radius:10px;display:grid;place-items:center;font-size:44px;font-weight:800}
+.slot.now{border-color:var(--yellow)}
+#holdbar{height:6px;background:#333;border-radius:3px;margin-top:10px;overflow:hidden}
+#hold{height:100%;width:0;background:var(--yellow)}
+#cam{width:100%;border-radius:10px;display:block;background:#000;aspect-ratio:4/3}
+.bar{display:flex;align-items:center;gap:8px;margin:5px 0}
+.bar b{width:16px}.bar .track{flex:1;height:20px;background:#2c2c2c;border-radius:4px;overflow:hidden}
+.bar .fill{height:100%;background:var(--blue);width:0;transition:width .15s}
+.bar.best .fill{background:var(--green)}
+.bar span{width:44px;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button{font-size:18px;font-weight:700;padding:16px;border:0;border-radius:12px;color:#111;cursor:pointer}
+#b1{background:var(--yellow)}#b2{background:#ccc}
+.small{display:flex;gap:8px;margin-top:10px}.small button{font-size:13px;padding:8px;background:#333;color:var(--ink);flex:1}
+.leds{width:14px;height:14px;border-radius:50%;background:#333;display:inline-block}
+.leds.on{background:var(--yellow);box-shadow:0 0 10px var(--yellow)}
+.muted{color:var(--muted);font-size:13px}
+</style></head>
+<body><main>
+<h1>🔐 Finger Lock <span class="leds" id="leds"></span><span id="conn">connecting…</span></h1>
+
+<div class="card">
+  <div id="state">…</div>
+  <div id="msg"></div>
+  <div class="slots"><div class="slot" id="s0"></div><div class="slot" id="s1"></div><div class="slot" id="s2"></div></div>
+  <div id="holdbar"><div id="hold"></div></div>
+</div>
+
+<div class="card buttons">
+  <button id="b1">Button 1<br><small>start</small></button>
+  <button id="b2">Button 2<br><small>close / lock</small></button>
+</div>
+
+<div class="card">
+  <img id="cam" alt="webcam">
+  <div class="muted" style="margin-top:6px">What the webcam sees. The green box is what the CNN looks at.</div>
+</div>
+
+<div class="card">
+  <div class="muted" style="margin-bottom:6px">CNN: how many fingers? (probability)</div>
+  <div id="bars"></div>
+  <div class="muted" id="fps" style="margin-top:6px"></div>
+</div>
+
+<div class="card">
+  <div class="muted">Latch test (for setting up the motor): <span id="latch"></span></div>
+  <div class="small"><button id="lo">open lid</button><button id="lc">close lid</button></div>
+  <div class="small"><button id="ls">− shorter</button><button id="ll">+ longer</button></div>
+  <div class="muted" style="margin-top:6px">Motors run <b id="ms">?</b> ms. Make it just long enough to reach the stop.</div>
+</div>
+</main>
+<script src="app.js"></script>
+</body></html>
